@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="GREEN SMP - A clean, premium Minecraft Survival Multiplayer website for your community." />
+  <title>GREEN SMP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #07110b;
+      --bg-2: #0b1a11;
+      --card: rgba(13, 26, 18, 0.72);
+      --card-2: rgba(18, 34, 25, 0.92);
+      --text: #edf7ef;
+      --muted: #a8b9ad;
+      --line: rgba(255,255,255,0.08);
+      --green: #57e389;
+      --green-2: #19c37d;
+      --accent: #8cffc1;
+      --shadow: 0 18px 60px rgba(0,0,0,0.35);
+      --radius: 24px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(87,227,137,0.20), transparent 28%),
+        radial-gradient(circle at top right, rgba(25,195,125,0.18), transparent 30%),
+        linear-gradient(180deg, #050a07 0%, var(--bg) 38%, #050a07 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .noise::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.035;
+      background-image: linear-gradient(rgba(255,255,255,0.8) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.8) 1px, transparent 1px);
+      background-size: 24px 24px;
+      mask-image: radial-gradient(circle at center, black 35%, transparent 100%);
+      z-index: 0;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .container {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(18px);
+      background: rgba(5,10,7,0.55);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 16px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: 0.4px;
+    }
+
+    .logo {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(145deg, rgba(87,227,137,0.95), rgba(25,195,125,0.65));
+      box-shadow: 0 12px 30px rgba(25,195,125,0.25);
+      color: #041007;
+      font-size: 20px;
+    }
+
+    .navlinks {
+      display: flex;
+      gap: 22px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .navlinks a:hover { color: var(--text); }
+
+    .navcta {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 18px;
+      border-radius: 16px;
+      border: 1px solid transparent;
+      font-weight: 700;
+      transition: 0.25s ease;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--green), var(--green-2));
+      color: #031008;
+      box-shadow: 0 16px 30px rgba(25,195,125,0.20);
+    }
+
+    .btn-primary:hover { transform: translateY(-2px); filter: brightness(1.03); }
+    .btn-ghost {
+      background: rgba(255,255,255,0.03);
+      border-color: var(--line);
+      color: var(--text);
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.06); }
+
+    .hero {
+      padding: 72px 0 34px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border: 1px solid rgba(87,227,137,0.22);
+      background: rgba(87,227,137,0.08);
+      color: #c7f7d8;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: clamp(3rem, 6vw, 5.7rem);
+      line-height: 0.95;
+      margin: 0;
+      letter-spacing: -0.06em;
+      max-width: 12ch;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #f0fff5 10%, #8cffc1 50%, #19c37d 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .lead {
+      margin: 18px 0 0;
+      max-width: 60ch;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.8;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .info-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 26px;
+    }
+
+    .pill {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--line);
+      color: #dce7df;
+      font-size: 14px;
+      backdrop-filter: blur(10px);
+    }
+
+    .hero-card {
+      background: linear-gradient(180deg, rgba(22,38,28,0.92), rgba(9,18,12,0.95));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 32px;
+      box-shadow: var(--shadow);
+      padding: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: auto -20% -30% auto;
+      width: 260px;
+      height: 260px;
+      background: radial-gradient(circle, rgba(87,227,137,0.18), transparent 65%);
+      pointer-events: none;
+    }
+
+    .panel {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 18px;
+    }
+
+    .server-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: start;
+      margin-bottom: 16px;
+    }
+
+    .server-name {
+      margin: 0;
+      font-size: 1.3rem;
+      font-weight: 800;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #caffe0;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(87,227,137,0.12);
+      border: 1px solid rgba(87,227,137,0.18);
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #57e389;
+      box-shadow: 0 0 18px #57e389;
+    }
+
+    .server-ip {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(0,0,0,0.22);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 14px 16px;
+      margin: 16px 0;
+    }
+
+    .server-ip code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 1rem;
+      color: #dfffe9;
+      word-break: break-word;
+    }
+
+    .copy-btn {
+      border: 0;
+      border-radius: 14px;
+      padding: 12px 14px;
+      background: rgba(87,227,137,0.14);
+      color: var(--text);
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+    .copy-btn:hover { background: rgba(87,227,137,0.22); }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .stat {
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--line);
+    }
+    .stat span { display: block; color: var(--muted); font-size: 13px; }
+    .stat strong { display: block; margin-top: 8px; font-size: 1.1rem; }
+
+    .section {
+      padding: 34px 0;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .section-head h2 {
+      font-size: clamp(1.7rem, 3vw, 2.5rem);
+      margin: 0;
+      letter-spacing: -0.04em;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 58ch;
+      line-height: 1.7;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .feature-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+      backdrop-filter: blur(12px);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .feature-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(87,227,137,0.22);
+    }
+
+    .icon {
+      width: 52px;
+      height: 52px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(87,227,137,0.22), rgba(25,195,125,0.10));
+      border: 1px solid rgba(87,227,137,0.16);
+      margin-bottom: 16px;
+      font-size: 22px;
+    }
+
+    .feature-card h3 {
+      margin: 0 0 10px;
+      font-size: 1.1rem;
+    }
+
+    .feature-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .glass {
+      background: var(--card-2);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .list {
+      display: grid;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .list-item {
+      display: flex;
+      gap: 12px;
+      align-items: start;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .check {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      flex: 0 0 26px;
+      background: rgba(87,227,137,0.12);
+      color: var(--green);
+      font-weight: 900;
+    }
+
+    .cta {
+      margin: 36px 0 10px;
+      background:
+        radial-gradient(circle at top left, rgba(87,227,137,0.18), transparent 34%),
+        linear-gradient(135deg, rgba(9,18,12,0.96), rgba(15,29,21,0.94));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 32px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .cta-inner {
+      padding: 30px;
+      display: grid;
+      grid-template-columns: 1.3fr 0.7fr;
+      gap: 22px;
+      align-items: center;
+    }
+
+    .cta h2 { margin: 0 0 10px; font-size: clamp(1.8rem, 3vw, 2.8rem); }
+    .cta p { margin: 0; color: var(--muted); line-height: 1.7; }
+
+    .footer {
+      padding: 26px 0 42px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      margin-top: 34px;
+    }
+
+    .footer-wrap {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .small { font-size: 14px; }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid, .cards, .split, .cta-inner { grid-template-columns: 1fr; }
+      h1 { max-width: 100%; }
+      .navlinks { display: none; }
+    }
+
+    @media (max-width: 620px) {
+      .container { width: min(100% - 20px, 1180px); }
+      .hero { padding-top: 40px; }
+      .server-ip { flex-direction: column; align-items: stretch; }
+      .copy-btn, .btn { width: 100%; }
+      .navcta { width: 100%; }
+      .nav { flex-wrap: wrap; }
+      .stat-grid { grid-template-columns: 1fr; }
+      .hero-card, .glass, .feature-card, .cta-inner { padding: 18px; }
+    }
+  </style>
+</head>
+<body class="noise">
+  <div class="topbar">
+    <div class="container">
+      <header class="nav">
+        <a class="brand" href="#home">
+          <div class="logo">🌿</div>
+          <div>
+            <div>GREEN SMP</div>
+            <div style="font-size:12px;color:var(--muted);font-weight:600;">Minecraft Survival Multiplayer</div>
+          </div>
+        </a>
+
+        <nav class="navlinks" aria-label="Main navigation">
+          <a href="#features">Features</a>
+          <a href="#about">About</a>
+          <a href="#join">Join</a>
+        </nav>
+
+        <div class="navcta">
+          <a class="btn btn-ghost" href="https://discord.gg/afjcR5jC" target="_blank" rel="noopener noreferrer">Discord</a>
+          <a class="btn btn-primary" href="#join">Play Now</a>
+        </div>
+      </header>
+    </div>
+  </div>
+
+  <main id="home" class="container">
+    <section class="hero">
+      <div class="hero-grid">
+        <div class="reveal">
+          <div class="eyebrow">✨ Friendly community • Voice chat enabled • 1.21+</div>
+          <h1>Build. Explore. <span class="gradient-text">Belong.</span></h1>
+          <p class="lead">
+            Welcome to GREEN SMP — a clean, community-driven Minecraft server made for players who enjoy survival,
+            teamwork, creative builds, and exciting events. Join a growing world where every player matters.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#join">Join the Server</a>
+            <a class="btn btn-ghost" href="#features">See Features</a>
+          </div>
+
+          <div class="info-row">
+            <div class="pill">Version: 1.21+</div>
+            <div class="pill">Type: SMP Survival</div>
+            <div class="pill">Founder: @Yes_Green</div>
+          </div>
+        </div>
+
+        <div class="hero-card reveal">
+          <div class="panel">
+            <div class="server-head">
+              <div>
+                <h2 class="server-name">Server Status</h2>
+                <div style="color:var(--muted);font-size:14px;margin-top:6px;">Designed for a premium first impression</div>
+              </div>
+              <div class="status"><span class="dot"></span> Online</div>
+            </div>
+
+            <div class="server-ip">
+              <code id="serverIp">greensmp.royalnode.cloud:25575</code>
+              <button class="copy-btn" id="copyBtn" type="button">Copy IP</button>
+            </div>
+
+            <div class="stat-grid">
+              <div class="stat">
+                <span>Community</span>
+                <strong>Friendly & Active</strong>
+              </div>
+              <div class="stat">
+                <span>Chat</span>
+                <strong>Voice Chat Enabled</strong>
+              </div>
+              <div class="stat">
+                <span>Crates</span>
+                <strong>Common to Master</strong>
+              </div>
+              <div class="stat">
+                <span>Ranks</span>
+                <strong>VIP • Legend • Demon</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="section">
+      <div class="section-head reveal">
+        <div>
+          <h2>Why players will stay</h2>
+          <p>Everything is arranged to feel premium, clear, and inviting — ideal for a Minecraft SMP website that looks modern on desktop and mobile.</p>
+        </div>
+      </div>
+
+      <div class="cards">
+        <article class="feature-card reveal">
+          <div class="icon">🛡️</div>
+          <h3>Active & Friendly Community</h3>
+          <p>A welcoming place where players can team up, trade, build, and make lasting friendships.</p>
+        </article>
+
+        <article class="feature-card reveal">
+          <div class="icon">🏗️</div>
+          <h3>Unique Builds & Collaboration</h3>
+          <p>Encourage massive towns, farms, bases, and shared projects that make the world feel alive.</p>
+        </article>
+
+        <article class="feature-card reveal">
+          <div class="icon">🎉</div>
+          <h3>Events & Competitions</h3>
+          <p>Keep the server exciting with regular events, challenges, and rewards for active players.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <div class="split">
+        <div class="glass reveal">
+          <div class="section-head" style="margin-bottom:8px;">
+            <div>
+              <h2>About GREEN SMP</h2>
+            </div>
+          </div>
+          <p style="color:var(--muted);line-height:1.8;margin:0;">
+            GREEN SMP is a community-driven Minecraft survival server created by <strong>@Yes_Green</strong>.
+            The goal is simple: create a fun, friendly, and active SMP where players can survive together,
+            build impressive creations, and enjoy a strong multiplayer experience.
+          </p>
+
+          <div class="list">
+            <div class="list-item"><span class="check">✓</span><span>Survival-focused gameplay with a collaborative community.</span></div>
+            <div class="list-item"><span class="check">✓</span><span>Custom progression through ranks, crates, and rewards.</span></div>
+            <div class="list-item"><span class="check">✓</span><span>Voice chat support for easier coordination and social play.</span></div>
+          </div>
+        </div>
+
+        <div class="glass reveal">
+          <div class="section-head" style="margin-bottom:8px;">
+            <div>
+              <h2>What makes it premium</h2>
+            </div>
+          </div>
+          <p style="color:var(--muted);line-height:1.8;margin:0;">
+            This layout uses a dark glassmorphism look, crisp typography, glowing green accents, and clean spacing.
+            It feels modern while still matching the Minecraft theme.
+          </p>
+
+          <div class="list">
+            <div class="list-item"><span class="check">✓</span><span>Clean hero section with strong call-to-action buttons.</span></div>
+            <div class="list-item"><span class="check">✓</span><span>Easy-to-read sections for features, about, and joining.</span></div>
+            <div class="list-item"><span class="check">✓</span><span>Responsive design for phones, tablets, and desktop.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="join" class="cta reveal">
+      <div class="cta-inner">
+        <div>
+          <h2>Ready to join GREEN SMP?</h2>
+          <p>
+            Jump into the server, copy the IP, and invite your friends. Use the Discord to stay updated on events,
+            announcements, and community news.
+          </p>
+        </div>
+        <div style="display:grid;gap:12px;">
+          <a class="btn btn-primary" href="https://discord.gg/afjcR5jC" target="_blank" rel="noopener noreferrer">Open Discord</a>
+          <button class="btn btn-ghost" id="copyBtn2" type="button">Copy Server IP</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-wrap">
+      <div class="small">© <span id="year"></span> GREEN SMP. All rights reserved.</div>
+      <div class="small">Founder: @Yes_Green • Minecraft 1.21+</div>
+    </div>
+  </footer>
+
+  <script>
+    const serverIp = 'greensmp.royalnode.cloud:25575';
+    const copyButtons = [document.getElementById('copyBtn'), document.getElementById('copyBtn2')];
+
+    async function copyIP() {
+      try {
+        await navigator.clipboard.writeText(serverIp);
+        copyButtons.forEach(btn => {
+          const original = btn.textContent;
+          btn.textContent = 'Copied!';
+          setTimeout(() => btn.textContent = original, 1400);
+        });
+      } catch (err) {
+        alert('Copy failed. Please copy manually: ' + serverIp);
+      }
+    }
+
+    copyButtons.forEach(btn => btn.addEventListener('click', copyIP));
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('show');
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
